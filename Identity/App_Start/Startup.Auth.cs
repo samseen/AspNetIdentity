@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Identity.Models;
+using Owin.Security.Providers.GitHub;
 
 namespace Identity
 {
@@ -46,23 +47,27 @@ namespace Identity
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseGitHubAuthentication(
+                clientId: "59730a7252d22e68a311",
+                clientSecret: "4b1c27ceaa5367047f2c3cc2fb1fc38a61d4d5b3");
+
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "f08e11e9-2023-4de7-8b0e-77a5f365fe56",
+                clientSecret: "leutV640($(bixXLSWZH90[");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "393146334814897",
+               appSecret: "a0deec0ca44e953e2a6bdcf66e42c509");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "109131421759-2vnf2940rp41qc1g2rfom6gn92o6k6k3.apps.googleusercontent.com",
+                ClientSecret = "oNPQOYSe1OqFP-K1nDTwwGlk"
+            });
         }
     }
 }

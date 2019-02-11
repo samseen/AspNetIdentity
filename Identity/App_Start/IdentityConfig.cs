@@ -11,15 +11,33 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Identity.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace Identity
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
+
+            string key = @"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";
+
+            var client = new SendGridClient(key);
+            var from = new EmailAddress("samseens@gmail.com", "Samson Akanbi");
+
+            var subject = message.Subject;
+            var to = new EmailAddress(message.Destination, "New User");
+            var plainTextContent = message.Body;
+            var htmlContent = message.Body;
+
+            var email = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            await client.SendEmailAsync(email);
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
         }
     }
 
@@ -27,6 +45,16 @@ namespace Identity
     {
         public Task SendAsync(IdentityMessage message)
         {
+            const string accountSID = @"AC20aae81add709c25094e6fafb163098b";
+            const string authToken = @"617db4852d5be6ac76776c7b875b605d";
+
+            TwilioClient.Init(accountSID, authToken);
+
+            var sms = MessageResource.Create(
+                body: message.Body,
+                from: new Twilio.Types.PhoneNumber("(619) 625-8824"),
+                to: new Twilio.Types.PhoneNumber(message.Destination));
+
             // Plug in your SMS service here to send a text message.
             return Task.FromResult(0);
         }
