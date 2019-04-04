@@ -23,10 +23,10 @@ namespace Identity
         public async Task SendAsync(IdentityMessage message)
         {
 
-            string key = @"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";
+            string key = @"*****************************************************";
 
             var client = new SendGridClient(key);
-            var from = new EmailAddress("samseens@gmail.com", "Samson Akanbi");
+            var from = new EmailAddress("****************", "John Doe");
 
             var subject = message.Subject;
             var to = new EmailAddress(message.Destination, "New User");
@@ -45,8 +45,8 @@ namespace Identity
     {
         public Task SendAsync(IdentityMessage message)
         {
-            const string accountSID = @"AC20aae81add709c25094e6fafb163098b";
-            const string authToken = @"617db4852d5be6ac76776c7b875b605d";
+            const string accountSID = @"*********************************";
+            const string authToken = @"******************************";
 
             TwilioClient.Init(accountSID, authToken);
 
